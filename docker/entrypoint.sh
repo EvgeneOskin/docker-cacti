@@ -35,6 +35,10 @@ update_rra_path() {
     && chown -R nginx:nginx /usr/share/nginx/cacti/rra/
 }
 
+start_flow_capture() {
+    service flow-capture start
+}
+
 spine_db_update() {
     set -x \
     && mysql -h $DB_HOSTNAME -u$DB_USERNAME -p $DB_PASSWORD -e "REPLACE INTO cacti.settings SET name='path_spine', value='/usr/local/spine/bin/spine';" \
@@ -51,5 +55,6 @@ if [ "$1" = "cacti" ];then
   && update_cacti_db_config \
   && update_spine_config \
   && update_rra_path \
+  && start_flow_capture \
   && start_supervisord
 fi

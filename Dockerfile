@@ -9,6 +9,8 @@ DB_TYPE=mysql \
 DB_PORT=3306 \
 DB_SSL=false
 
+RUN echo 'http://nl.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+
 ########### INSTALL PHP, MYSQL, SNMP, SUPERVISORD ###########
 RUN apk add --no-cache --virtual .static_deps \
 python supervisor openssl \
@@ -71,6 +73,12 @@ RUN wget --no-check-certificate http://docs.cacti.net/_media/usertemplate:data:a
 && cp usertemplate_apcupsd/query_* /usr/share/nginx/cacti/scripts/ \
 && rm -rf usertemplate_apcupsd
 
+# install flow (aka netflow)
+RUN apk add --update flowd-tools
+RUN wget -O flowview-v1.1-1.tgz http://docs.cacti.net/_media/plugin:flowview-v1.1-1.tgz \
+&& tar xfz flowview-v1.1-1.tgz && rm plugin:flowview-v1.1-1.tgz \
+&& mv flowview/flow-capture /etc/init.d/ \
+&& mv flowview /usr/share/nginx/cacti/plugins/flowview
 
 ########### SETUP NGINX, PHP-FPM ###########
 COPY docker/ /docker/
