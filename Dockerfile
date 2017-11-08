@@ -72,14 +72,10 @@ RUN curl -L http://docs.cacti.net/_media/usertemplate:data:apc:apcupsd:apcupsd_1
   && cp usertemplate_apcupsd/query_* /usr/share/nginx/cacti/scripts/ \
   && rm -rf usertemplate_apcupsd
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-  && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-  && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
-
 # install flow (aka netflow)
-RUN apk add --update flowd-tools python2
 RUN curl -L http://docs.cacti.net/_media/plugin:flowview-v1.1-1.tgz > flowview-v1.1-1.tgz \
   && tar xfz flowview-v1.1-1.tgz && rm flowview-v1.1-1.tgz \
+  && chmod +x flowview/flow-capture \
   && mv flowview/flow-capture /etc/init.d/ \
   && mv flowview /usr/share/nginx/cacti/plugins/flowview
 
