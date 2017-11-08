@@ -87,6 +87,7 @@ RUN curl -L http://docs.cacti.net/_media/usertemplate:data:apc:apcupsd:apcupsd_1
 RUN curl -L http://docs.cacti.net/_media/plugin:flowview-v1.1-1.tgz > flowview-v1.1-1.tgz \
   && tar xfz flowview-v1.1-1.tgz && rm flowview-v1.1-1.tgz \
   && chmod +x flowview/flow-capture \
+  && sed 's,/usr/share/cacti/site,/usr/share/nginx/cacti,g' -i'' flowview/flow-capture \
   && mv flowview/flow-capture /etc/init.d/ \
   && mv flowview /usr/share/nginx/cacti/plugins/flowview
 
