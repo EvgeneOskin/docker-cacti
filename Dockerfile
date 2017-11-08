@@ -55,7 +55,7 @@ RUN set -x \
 # Install flow-tools
 RUN cd /usr/local/ \
   && curl https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/flow-tools/flow-tools-0.68.5.1.tar.bz2 > flow-tools-0.68.5.1.tar.bz2 \
-  && tar xvzf flow-tools-0.68.5.1.tar.bz2 && rm flow-tools-0.68.5.1.tar.bz2 \
+  && tar xf flow-tools-0.68.5.1.tar.bz2 && rm flow-tools-0.68.5.1.tar.bz2 \
   && cd flow-tools-0.68.5.1 \
   && ./configure \
   && make \
