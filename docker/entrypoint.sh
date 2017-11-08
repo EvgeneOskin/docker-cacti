@@ -36,7 +36,7 @@ update_rra_path() {
 }
 
 start_flow_capture() {
-    service flow-capture start
+    sudo service flow-capture start
 }
 
 spine_db_update() {
