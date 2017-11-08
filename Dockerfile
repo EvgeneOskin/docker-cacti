@@ -52,6 +52,17 @@ RUN set -x \
   && cd /usr/share/nginx/ \
   && rm -rf cacti-spine-"$CACTI_VERSION" cacti-spine-"$CACTI_VERSION".tar.gz
 
+# Install flow-tools
+RUN cd /usr/local/ \
+  && curl https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/flow-tools/flow-tools-0.68.5.1.tar.bz2 > flow-tools-0.68.5.1.tar.bz2 \
+  && tar xvzf flow-tools-0.68.5.1.tar.bz2 && rm flow-tools-0.68.5.1.tar.bz2 \
+  && cd flow-tools-0.68.5.1 \
+  && ./configure \
+  && make \
+  && make install
+
+ENV PATH="${PATH}:/usr/local/flow-tools/bin"
+
 ########### REMOVE SPINE DEPS ###########
 RUN apk del .spine-build-deps
 
