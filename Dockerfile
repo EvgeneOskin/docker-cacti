@@ -35,7 +35,7 @@ RUN apk add --no-cache --virtual .spine-build-deps \
 RUN set -x \
   && mkdir -p /usr/share/nginx/cacti \
   && cd /usr/share/nginx/ \
-  && curl https://www.cacti.net/downloads/cacti-"$CACTI_VERSION".tar.gz > cacti-"$CACTI_VERSION".tar.gz \
+  && curl -L https://www.cacti.net/downloads/cacti-"$CACTI_VERSION".tar.gz > cacti-"$CACTI_VERSION".tar.gz \
   && tar xzvf cacti-"$CACTI_VERSION".tar.gz  -C /usr/share/nginx/ \
   && mv cacti-"$CACTI_VERSION"/* cacti/ \
   && rm -rf cacti-"$CACTI_VERSION".tar.gz html cacti-"$CACTI_VERSION"
@@ -43,7 +43,7 @@ RUN set -x \
 ########### DOWNLOAD SPINE ###########
 RUN set -x \
   && cd /usr/share/nginx/ \
-  && curl https://www.cacti.net/downloads/spine/cacti-spine-"$CACTI_VERSION".tar.gz > cacti-spine-"$CACTI_VERSION".tar.gz \
+  && curl -L https://www.cacti.net/downloads/spine/cacti-spine-"$CACTI_VERSION".tar.gz > cacti-spine-"$CACTI_VERSION".tar.gz \
   && tar xvzf cacti-spine-"$CACTI_VERSION".tar.gz \
   && cd cacti-spine-"$CACTI_VERSION" \
   && ./configure \
@@ -57,14 +57,14 @@ RUN apk del .spine-build-deps
 
 # install mikrotik plugin
 
-RUN curl https://github.com/Cacti/plugin_mikrotik/archive/e05d3f97c54fa62409e028e3cef54f34030e5816.zip > e05d3f97c54fa62409e028e3cef54f34030e5816.zip \
+RUN curl -L https://github.com/Cacti/plugin_mikrotik/archive/e05d3f97c54fa62409e028e3cef54f34030e5816.zip > e05d3f97c54fa62409e028e3cef54f34030e5816.zip \
   && unzip e05d3f97c54fa62409e028e3cef54f34030e5816.zip \
   && rm e05d3f97c54fa62409e028e3cef54f34030e5816.zip \
   && mv plugin_mikrotik-e05d3f97c54fa62409e028e3cef54f34030e5816 /usr/share/nginx/cacti/plugins/mikrotik
 
 # install apcupsd
 RUN apk add --no-cache --update apcupsd
-RUN curl http://docs.cacti.net/_media/usertemplate:data:apc:apcupsd:apcupsd_1.1.zip > usertemplate:data:apc:apcupsd:apcupsd_1.1.zip \
+RUN curl -L http://docs.cacti.net/_media/usertemplate:data:apc:apcupsd:apcupsd_1.1.zip > usertemplate:data:apc:apcupsd:apcupsd_1.1.zip \
   && mkdir usertemplate_apcupsd \
   && unzip -d usertemplate_apcupsd usertemplate:data:apc:apcupsd:apcupsd_1.1.zip \
   && rm usertemplate:data:apc:apcupsd:apcupsd_1.1.zip \
@@ -78,7 +78,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
 
 # install flow (aka netflow)
 RUN apk add --update flowd-tools python2
-RUN curl http://docs.cacti.net/_media/plugin:flowview-v1.1-1.tgz > flowview-v1.1-1.tgz \
+RUN curl -L http://docs.cacti.net/_media/plugin:flowview-v1.1-1.tgz > flowview-v1.1-1.tgz \
   && tar xfz flowview-v1.1-1.tgz && rm plugin:flowview-v1.1-1.tgz \
   && mv flowview/flow-capture /etc/init.d/ \
   && mv flowview /usr/share/nginx/cacti/plugins/flowview
