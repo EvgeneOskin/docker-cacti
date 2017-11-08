@@ -79,7 +79,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
 # install flow (aka netflow)
 RUN apk add --update flowd-tools python2
 RUN curl -L http://docs.cacti.net/_media/plugin:flowview-v1.1-1.tgz > flowview-v1.1-1.tgz \
-  && tar xfz flowview-v1.1-1.tgz && rm plugin:flowview-v1.1-1.tgz \
+  && tar xfz flowview-v1.1-1.tgz && rm flowview-v1.1-1.tgz \
   && mv flowview/flow-capture /etc/init.d/ \
   && mv flowview /usr/share/nginx/cacti/plugins/flowview
 
